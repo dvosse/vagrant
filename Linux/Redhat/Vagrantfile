@@ -1,0 +1,23 @@
+################################################################################################################################################
+## Virtual Adobe user_sync setup script
+################################################################################################################################################
+
+
+
+## Primary machine setup
+Vagrant.configure("2") do |config|
+
+
+    config.vm.box = "generic/rhel7"
+
+	config.vbguest.auto_update = false
+    config.ssh.insert_key = false
+    config.vm.synced_folder "../../Scratch Directory", "/scratch"
+    config.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--memory", 2048]
+      v.customize ["modifyvm", :id, "--cpus", 2]
+    end
+
+
+end
+

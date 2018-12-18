@@ -1,0 +1,28 @@
+###############################################################################################################################################
+## Virtual Adobe user_sync setup script
+################################################################################################################################################
+
+
+
+## Primary machine setup
+Vagrant.configure("2") do |config|
+
+	config.vm.box = "danimaetrix/sles12-sp1-sdk"
+    #config.vm.box = "suse/sles11sp3"
+    #config.vm.box = "suse/sles12sp1"
+    #config.vm.box = "suse/sles12sp2"
+    #config.vm.box = "wvera/sles12sp1"
+    #config.vm.box = "trueability/sles-12-sp1"
+
+    config.vbguest.auto_update = false
+    config.vm.boot_timeout = 600
+    config.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--memory", 2048]
+      v.customize ["modifyvm", :id, "--cpus", 2]
+      v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+      #v.name = "SLES12-SP1"
+    end
+    config.ssh.insert_key = false
+
+end
+

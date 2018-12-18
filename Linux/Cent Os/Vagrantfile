@@ -1,0 +1,23 @@
+################################################################################################################################################
+## Virtual Adobe user_sync setup script
+################################################################################################################################################
+
+
+
+## Primary machine setup
+Vagrant.configure("2") do |config|
+
+    #config.vm.box = "thinktainer/centos-6_6-x64"
+    config.vm.box = "ddacunha/CentOS-7.2"
+
+    config.ssh.insert_key = false
+	config.vbguest.auto_update = false	
+    config.vm.synced_folder "../../Scratch Directory", "/scratch"
+    config.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--memory", 2048]
+      v.customize ["modifyvm", :id, "--cpus", 2]
+    end
+
+
+end
+
