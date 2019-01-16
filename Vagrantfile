@@ -1,9 +1,5 @@
 
-
-
-##  2019 Danimae Vossen
-
-
+## 2019 Danimae Vossen
 ## Uncomment the boxes you want to run, then run 'vagrant up' from the command line to lauch them simultaneously
 ## If you need to run multiples independently, copy this file into another directory and select individual boxes
 
@@ -46,7 +42,7 @@ boxes = [
   # "opentable/win-2012r2-standard-amd64-nocm",        # Server 2012 Standard (no updates) *
   # "danimaetrix/prft-2012r2-standard-ads",            # Server 2012 with Active Directory
   "danimaetrix/2012R2-demo-server",                  # Server 2012 Adobe Demo Server (fully updated) *
-  # "mwrock/Windows2016",                              # Server 2016 Standard *
+  "mwrock/Windows2016",                              # Server 2016 Standard *
    
   # "inclusivedesign/windows81-eval-x64",              # Windows 8 *
   # "danimaetrix/win10-prof-x64",                      # Windows 10 (Danimae) *
