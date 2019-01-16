@@ -19,8 +19,8 @@ boxes = [
   # "bento/ubuntu-14.04",                              # Ubuntu 14.04
   # "wzurowski/vivid64",                               # Ubuntu 15.04
   # "geerlingguy/ubuntu1604",                          # Ubuntu 16.04 *
-  "mrlesmithjr/zesty64",                               # Ubuntu 17.04
-  "ubuntu/bionic64",                                   # Ubuntu 18.04 *
+  # "mrlesmithjr/zesty64",                             # Ubuntu 17.04
+  # "ubuntu/bionic64",                                 # Ubuntu 18.04 *
 
   # "danimaetrix/openSUSE-Leap-42.3",                  # OpenSUSE (Danimae) *     
   # "opensuse/openSUSE-42.2-x86_64",                   # OpenSUSE
@@ -45,7 +45,7 @@ boxes = [
   # "opentable/win-2008r2-standard-amd64-nocm",        # Server 2008 Standard *
   # "opentable/win-2012r2-standard-amd64-nocm",        # Server 2012 Standard (no updates) *
   # "danimaetrix/prft-2012r2-standard-ads",            # Server 2012 with Active Directory
-  # "danimaetrix/2012R2-demo-server",                  # Server 2012 Adobe Demo Server (fully updated) *
+  "danimaetrix/2012R2-demo-server",                  # Server 2012 Adobe Demo Server (fully updated) *
   # "mwrock/Windows2016",                              # Server 2016 Standard *
    
   # "inclusivedesign/windows81-eval-x64",              # Windows 8 *
