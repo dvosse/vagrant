@@ -41,10 +41,12 @@ boxes = [
   # "opentable/win-2008r2-standard-amd64-nocm",        # Server 2008 Standard *
 
   # "opentable/win-2012r2-standard-amd64-nocm",        # Server 2012 Standard (no updates) *
+  
   # "danimaetrix/prft-2012r2-standard-ads",            # Server 2012 with Active Directory
   # "danimaetrix/2012R2-demo-server",                  # Server 2012 Adobe Demo Server (fully updated) *
-  # "danimaetrix/win2016-datacenter-x64",              # Server 2016 Datacenter *
-   "mwrock/Windows2016",                              # Server 2016 Standard 
+  
+  # "mwrock/Windows2016",                              # Server 2016 Standard 
+   "danimaetrix/win2016-datacenter-x64",              # Server 2016 Datacenter (Danimae) *
    
   # "inclusivedesign/windows81-eval-x64",              # Windows 8 *
   # "danimaetrix/win10-prof-x64",                      # Windows 10 (Danimae) *
