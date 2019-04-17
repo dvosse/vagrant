@@ -57,41 +57,31 @@ boxes = [
 
 ]
 
-base_ip = "192.168.1."
-ip = 1
-ssh = 2200
+
 box_config = Hash.new 
-
 boxes.each do |key|
-	ip += 1
-	ssh += 1
-	nextIP = base_ip + ip.to_s 
-	boxName = key.sub("/","-")
 
+	boxName = key.sub("/","-")
 	puts "\e[32m\nBox details\n\e[0m-------------"
 	puts "name: " + "\e[36m" + boxName + "\e[0m" 
-	# puts "ssh:  \e[36mvagrant@" + nextIP + " -p " + ssh.to_s + "\e[0m " 
 	puts "ssh:  \e[36mvagrant ssh " + boxName + "\e[0m "
 	puts 
 
 	box_config[key] = {
 		"name" => boxName,
-		"ssh" => ssh,
-		"ip" => nextIP
 	}
+
 end
 
 Vagrant.configure("2") do |config|  
 
   boxes.each do |key|	
 
-	# config.vm.network :forwarded_port, guest: 22, host: box_config[key]["ssh"], id: "ssh", auto_correct: true
-	# config.vm.network :private_network, ip: box_config[key]["ip"]	
 	# vbox.vm.synced_folder ".", "/vagrant", disabled: true
-
 	#config.vm.synced_folder "D:\\Repositories\\adobe\\UST-Install-Scripts\\other_platforms", "/test"
 	#config.vm.synced_folder "D:\\Repositories\\adobe\\user-sync-fork", "/pyinst"
 	#config.vm.synced_folder "D:\\Repositories\\adobe\\keyring-test", "/pyinst"
+
     config.vm.define box_config[key]["name"] do |vbox| 
       vbox.vm.box = key
       vbox.vm.boot_timeout = 600
