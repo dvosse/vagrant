@@ -15,6 +15,7 @@ boxes = [
   # "bento/ubuntu-14.04",                              # Ubuntu 14.04
   # "wzurowski/vivid64",                               # Ubuntu 15.04
   # "geerlingguy/ubuntu1604",                          # Ubuntu 16.04 *
+  # "consumerlab/ubuntu-server-16-04-LTS",             # Ubuntu 16.04
   # "mrlesmithjr/zesty64",                             # Ubuntu 17.04
   # "ubuntu/bionic64",                                 # Ubuntu 18.04 *
 
@@ -27,6 +28,7 @@ boxes = [
   # "thinktainer/centos-6_6-x64",                      # Centos 6 *
   # "ddacunha/CentOS-7.2",                             # Centos 7
   # "generic/fedora27",                                # Fedora *
+  # "generic/gentoo",                                # Fedora *
 
   # "wvera/sles12sp1",                                 # SLES 12 / SP 1
   # "trueability/sles-12-sp1",                         # SLES 12 / SP 1
@@ -43,7 +45,7 @@ boxes = [
   # "opentable/win-2012r2-standard-amd64-nocm",        # Server 2012 Standard (no updates) *
   
   # "danimaetrix/prft-2012r2-standard-ads",            # Server 2012 with Active Directory
-  # "danimaetrix/2012R2-demo-server",                  # Server 2012 Adobe Demo Server (fully updated) *
+   "danimaetrix/2012R2-demo-server",                  # Server 2012 Adobe Demo Server (fully updated) *
   
   # "mwrock/Windows2016",                              # Server 2016 Standard 
    "danimaetrix/win2016-datacenter-x64",              # Server 2016 Datacenter (Danimae) *
@@ -56,18 +58,43 @@ boxes = [
 ]
 
 base_ip = "192.168.1."
-ip = 100
+ip = 1
+ssh = 2200
+box_config = Hash.new 
+
+boxes.each do |key|
+	ip += 1
+	ssh += 1
+	nextIP = base_ip + ip.to_s 
+	boxName = key.sub("/","-")
+
+	puts "\e[32m\nBox details\n\e[0m-------------"
+	puts "name: " + "\e[36m" + boxName + "\e[0m" 
+	# puts "ssh:  \e[36mvagrant@" + nextIP + " -p " + ssh.to_s + "\e[0m " 
+	puts "ssh:  \e[36mvagrant ssh " + boxName + "\e[0m "
+	puts 
+
+	box_config[key] = {
+		"name" => boxName,
+		"ssh" => ssh,
+		"ip" => nextIP
+	}
+end
 
 Vagrant.configure("2") do |config|  
-  boxes.each do |key|
-    ip += 1
-    vbox = key.sub("/","_")
-    config.vm.define vbox do |vbox|    
-      
+
+  boxes.each do |key|	
+
+	# config.vm.network :forwarded_port, guest: 22, host: box_config[key]["ssh"], id: "ssh", auto_correct: true
+	# config.vm.network :private_network, ip: box_config[key]["ip"]	
+	# vbox.vm.synced_folder ".", "/vagrant", disabled: true
+
+	#config.vm.synced_folder "D:\\Repositories\\adobe\\UST-Install-Scripts\\other_platforms", "/test"
+	#config.vm.synced_folder "D:\\Repositories\\adobe\\user-sync-fork", "/pyinst"
+	config.vm.synced_folder "D:\\Repositories\\adobe\\keyring-test", "/pyinst"
+    config.vm.define box_config[key]["name"] do |vbox| 
       vbox.vm.box = key
       vbox.vm.boot_timeout = 600
-      #vbox.vm.synced_folder ".", "/vagrant", disabled: true
-      vbox.vm.network :private_network, ip: base_ip + ip.to_s 
       vbox.ssh.insert_key = false
       vbox.vbguest.auto_update = false      
       vbox.vm.provider "virtualbox" do |v|
@@ -75,11 +102,9 @@ Vagrant.configure("2") do |config|
         v.customize ["modifyvm", :id, "--cpus", 2]
         v.customize ["modifyvm", :id, "--vram", 256]
         v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
-        v.gui = false
-      end
-    end
+        v.gui = false		
+		v.name = box_config[key]["name"]
+	  end
+   end	
   end
 end
-
-
-
