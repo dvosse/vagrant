@@ -28,7 +28,7 @@ boxes = [
   # "thinktainer/centos-6_6-x64",                      # Centos 6 *
   # "ddacunha/CentOS-7.2",                             # Centos 7
   # "generic/fedora27",                                # Fedora *
-  # "generic/gentoo",                                # Fedora *
+  # "generic/gentoo",                                  # Fedora *
 
   # "wvera/sles12sp1",                                 # SLES 12 / SP 1
   # "trueability/sles-12-sp1",                         # SLES 12 / SP 1
@@ -41,11 +41,8 @@ boxes = [
   # "AndrewDryga/vagrant-box-osx",                     # MacOS (may need to disable folder sync (uncomment below)) *
 
   # "opentable/win-2008r2-standard-amd64-nocm",        # Server 2008 Standard *
-
-  # "opentable/win-2012r2-standard-amd64-nocm",        # Server 2012 Standard (no updates) *
-  
-  # "danimaetrix/prft-2012r2-standard-ads",            # Server 2012 with Active Directory
-   "danimaetrix/2012R2-demo-server",                  # Server 2012 Adobe Demo Server (fully updated) *
+  # "opentable/win-2012r2-standard-amd64-nocm",        # Server 2012 Standard (no updates) *  
+   "danimaetrix/2012R2-demo-server",                   # Server 2012 Adobe Demo Server (fully updated) *
   
   # "mwrock/Windows2016",                              # Server 2016 Standard 
   # "danimaetrix/win2016-datacenter-x64",              # Server 2016 Datacenter (Danimae) *
@@ -77,7 +74,7 @@ Vagrant.configure("2") do |config|
 
   boxes.each do |key|	
 
-	# vbox.vm.synced_folder ".", "/vagrant", disabled: true
+	#vbox.vm.synced_folder ".", "/vagrant", disabled: true
 	#config.vm.synced_folder "D:\\Repositories\\adobe\\UST-Install-Scripts\\other_platforms", "/test"
 	#config.vm.synced_folder "D:\\Repositories\\adobe\\user-sync-fork", "/pyinst"
 	#config.vm.synced_folder "D:\\Repositories\\adobe\\keyring-test", "/pyinst"
@@ -96,5 +93,6 @@ Vagrant.configure("2") do |config|
 		v.name = box_config[key]["name"]
 	  end
    end	
+
   end
 end
