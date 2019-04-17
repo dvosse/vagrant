@@ -14,9 +14,10 @@ boxes = [
   # "ubuntu/trusty64",                                 # Ubuntu 14.04
   # "bento/ubuntu-14.04",                              # Ubuntu 14.04
   # "wzurowski/vivid64",                               # Ubuntu 15.04
-   "geerlingguy/ubuntu1604",                          # Ubuntu 16.04 *
+  # "geerlingguy/ubuntu1604",                          # Ubuntu 16.04 *
+  # "consumerlab/ubuntu-server-16-04-LTS",             # Ubuntu 16.04
   # "mrlesmithjr/zesty64",                             # Ubuntu 17.04
-   "ubuntu/bionic64",                                 # Ubuntu 18.04 *
+  # "ubuntu/bionic64",                                 # Ubuntu 18.04 *
 
   # "danimaetrix/openSUSE-Leap-42.3",                  # OpenSUSE (Danimae) *     
   # "opensuse/openSUSE-42.2-x86_64",                   # OpenSUSE
@@ -25,8 +26,9 @@ boxes = [
   
   # "generic/rhel7",                                   # Redhat *
   # "thinktainer/centos-6_6-x64",                      # Centos 6 *
-   "ddacunha/CentOS-7.2",                             # Centos 7
+  # "ddacunha/CentOS-7.2",                             # Centos 7
   # "generic/fedora27",                                # Fedora *
+  # "generic/gentoo",                                # Fedora *
 
   # "wvera/sles12sp1",                                 # SLES 12 / SP 1
   # "trueability/sles-12-sp1",                         # SLES 12 / SP 1
@@ -43,10 +45,10 @@ boxes = [
   # "opentable/win-2012r2-standard-amd64-nocm",        # Server 2012 Standard (no updates) *
   
   # "danimaetrix/prft-2012r2-standard-ads",            # Server 2012 with Active Directory
-  # "danimaetrix/2012R2-demo-server",                  # Server 2012 Adobe Demo Server (fully updated) *
+   "danimaetrix/2012R2-demo-server",                  # Server 2012 Adobe Demo Server (fully updated) *
   
   # "mwrock/Windows2016",                              # Server 2016 Standard 
-  # "danimaetrix/win2016-datacenter-x64",              # Server 2016 Datacenter (Danimae) *
+   "danimaetrix/win2016-datacenter-x64",              # Server 2016 Datacenter (Danimae) *
    
   # "inclusivedesign/windows81-eval-x64",              # Windows 8 *
   # "danimaetrix/win10-prof-x64",                      # Windows 10 (Danimae) *
@@ -58,33 +60,41 @@ boxes = [
 base_ip = "192.168.1."
 ip = 1
 ssh = 2200
+box_config = Hash.new 
 
-
-Vagrant.configure("2") do |config|  
-  boxes.each do |key|
-    ip += 1
+boxes.each do |key|
+	ip += 1
 	ssh += 1
 	nextIP = base_ip + ip.to_s 
 	boxName = key.sub("/","-")
-	vbox = boxName
 
 	puts "\e[32m\nBox details\n\e[0m-------------"
 	puts "name: " + "\e[36m" + boxName + "\e[0m" 
-	puts "ssh:  \e[36mvagrant@" + nextIP + " -p " + ssh.to_s + "\e[0m " 
+	# puts "ssh:  \e[36mvagrant@" + nextIP + " -p " + ssh.to_s + "\e[0m " 
 	puts "ssh:  \e[36mvagrant ssh " + boxName + "\e[0m "
 	puts 
-	
-	config.vm.network :forwarded_port, guest: 22, host: ssh, host_ip: "0.0.0.0", id: "ssh", auto_correct: true
-    config.vm.define vbox do |vbox| 
-#   config.vm.network :public_network   
-    config.vm.network :private_network, ip: nextIP	
-	config.vm.synced_folder "D:\\Repositories\\adobe\\UST-Install-Scripts\\other_platforms", "/test"
-   
 
+	box_config[key] = {
+		"name" => boxName,
+		"ssh" => ssh,
+		"ip" => nextIP
+	}
+end
+
+Vagrant.configure("2") do |config|  
+
+  boxes.each do |key|	
+
+	# config.vm.network :forwarded_port, guest: 22, host: box_config[key]["ssh"], id: "ssh", auto_correct: true
+	# config.vm.network :private_network, ip: box_config[key]["ip"]	
+	# vbox.vm.synced_folder ".", "/vagrant", disabled: true
+
+	#config.vm.synced_folder "D:\\Repositories\\adobe\\UST-Install-Scripts\\other_platforms", "/test"
+	#config.vm.synced_folder "D:\\Repositories\\adobe\\user-sync-fork", "/pyinst"
+	config.vm.synced_folder "D:\\Repositories\\adobe\\keyring-test", "/pyinst"
+    config.vm.define box_config[key]["name"] do |vbox| 
       vbox.vm.box = key
       vbox.vm.boot_timeout = 600
-
-      #vbox.vm.synced_folder ".", "/vagrant", disabled: true
       vbox.ssh.insert_key = false
       vbox.vbguest.auto_update = false      
       vbox.vm.provider "virtualbox" do |v|
@@ -93,15 +103,8 @@ Vagrant.configure("2") do |config|
         v.customize ["modifyvm", :id, "--vram", 256]
         v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
         v.gui = false		
-		v.name = boxName
+		v.name = box_config[key]["name"]
 	  end
-    end
-	
-
-	
-	
+   end	
   end
 end
-
-
-
