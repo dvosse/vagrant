@@ -48,7 +48,7 @@ boxes = [
    "danimaetrix/2012R2-demo-server",                  # Server 2012 Adobe Demo Server (fully updated) *
   
   # "mwrock/Windows2016",                              # Server 2016 Standard 
-   "danimaetrix/win2016-datacenter-x64",              # Server 2016 Datacenter (Danimae) *
+  # "danimaetrix/win2016-datacenter-x64",              # Server 2016 Datacenter (Danimae) *
    
   # "inclusivedesign/windows81-eval-x64",              # Windows 8 *
   # "danimaetrix/win10-prof-x64",                      # Windows 10 (Danimae) *
@@ -91,7 +91,7 @@ Vagrant.configure("2") do |config|
 
 	#config.vm.synced_folder "D:\\Repositories\\adobe\\UST-Install-Scripts\\other_platforms", "/test"
 	#config.vm.synced_folder "D:\\Repositories\\adobe\\user-sync-fork", "/pyinst"
-	config.vm.synced_folder "D:\\Repositories\\adobe\\keyring-test", "/pyinst"
+	#config.vm.synced_folder "D:\\Repositories\\adobe\\keyring-test", "/pyinst"
     config.vm.define box_config[key]["name"] do |vbox| 
       vbox.vm.box = key
       vbox.vm.boot_timeout = 600
