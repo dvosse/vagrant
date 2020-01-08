@@ -1,11 +1,15 @@
 
-## 2019 Danimae Vossen
+## 2020 Danimae Vossen
 ## Uncomment the boxes you want to run, then run 'vagrant up' from the command line to lauch them simultaneously
 ## If you need to run multiples independently, copy this file into another directory and select individual boxes
 
 ## Recommended choices denoted by *
 
+## Prerequsite (Optional) vagrant plugin install vagrant-disksize
+
 boxes = [
+
+  ##### LINUX VM #####
 
   # "f500/ubuntu-lucid64",                             # Ubuntu 10.04
   # "3dox/ubuntu-oneiric",                             # Ubuntu 11.04
@@ -15,11 +19,11 @@ boxes = [
   # "bento/ubuntu-14.04",                              # Ubuntu 14.04
   # "wzurowski/vivid64",                               # Ubuntu 15.04
   # "geerlingguy/ubuntu1604",                          # Ubuntu 16.04 *
-  # "consumerlab/ubuntu-server-16-04-LTS",             # Ubuntu 16.04
   # "mrlesmithjr/zesty64",                             # Ubuntu 17.04
   # "ubuntu/bionic64",                                 # Ubuntu 18.04 *
-
-  # "danimaetrix/openSUSE-Leap-42.3",                  # OpenSUSE (Danimae) *     
+  # "socialwifi/ubuntu-gui",                           # Ubuntu 18.04 *
+  
+  # "danimaetrix/openSUSE-Leap-42.3",                  # OpenSUSE *     
   # "opensuse/openSUSE-42.2-x86_64",                   # OpenSUSE
   # "webhippie/opensuse-13.2",                         # OpenSUSE
   # "bento/opensuse-leap-42.1",                        # OpenSUSE
@@ -38,61 +42,54 @@ boxes = [
   # "debian/contrib-jessie64",                         # Debian
   # "generic/debian9",                                 # Debian *
 
-   #{}"AndrewDryga/vagrant-box-osx",                     # MacOS (may need to disable folder sync (uncomment below)) *
+  ##### MACOS VM #####
 
-  # "opentable/win-2008r2-standard-amd64-nocm",        # Server 2008 Standard *
-  # "opentable/win-2012r2-standard-amd64-nocm",        # Server 2012 Standard (no updates) *  
-  # "danimaetrix/2012R2-demo-server",                   # Server 2012 Adobe Demo Server (fully updated) *
-  
-  # "mwrock/Windows2016",                              # Server 2016 Standard 
-  # "danimaetrix/win2016-datacenter-x64",              # Server 2016 Datacenter (Danimae) *
-   
-  # "inclusivedesign/windows81-eval-x64",              # Windows 8 *
-   #{}"danimaetrix/win10-prof-x64",                      # Windows 10 (Danimae) *
-  # "opentable/win-7-professional-amd64-nocm",         # Windows 7 *
-  # "danimaetrix/vista-sp2-x64"                        # Vista x64 (Danimae) *
+  # "danimaetrix/macOS-high-sierra",				   # MacOSX High Sierra
+  # "danimaetrix/macOS-mojave",						   # MacOSX Mojave
+
+  ##### WINDOWS VM #####
+
+  # "danimaetrix/windows-95",						   # Windows 95
+   "danimaetrix/windows-vista-sp2",				   # Windows Vista
+   "danimaetrix/windows-7-ultimate",				   # Windows 7 Ultimate
+  # "danimaetrix/windows-8.1",						   # Windows 8.1
+  # "danimaetrix/windows-server-2012R2",			   # Windows Server 2012 R2
+  # "danimaetrix/windows-server-2012R2-core",		   # Windows Server 2012 R2 (Core)
+  # "danimaetrix/windows-10-professional",			   # Windows 10 Professional
+  # "danimaetrix/windows-server-2016-datacenter"	   # Windows Server 2016 Datacenter
 
 ]
 
-
-box_config = Hash.new 
-boxes.each do |key|
-
-	boxName = key.sub("/","-")
-	puts "\e[32m\nBox details\n\e[0m-------------"
-	puts "name: " + "\e[36m" + boxName + "\e[0m" 
-	puts "ssh:  \e[36mvagrant ssh " + boxName + "\e[0m "
-	puts 
-
-	box_config[key] = {
-		"name" => boxName,
-	}
-
-end
-
 Vagrant.configure("2") do |config|  
+	boxes.each do |key|
+		boxName = key.sub("/","-")
+		vbox = boxName
 
-  boxes.each do |key|	
+		puts "\e[32m\nBox details\n\e[0m-------------"
+		puts "name: " + "\e[36m" + boxName + "\e[0m" 
+		puts "ssh:  \e[36mvagrant ssh " + boxName + "\e[0m "
+		puts 
 
-	config.vm.synced_folder ".", "/vagrant", disabled: true
-	#config.vm.synced_folder "D:\\Repositories\\adobe\\UST-Install-Scripts\\other_platforms", "/test"
-	#config.vm.synced_folder "D:\\Repositories\\adobe\\user-sync-fork", "/pyinst"
-	#config.vm.synced_folder "D:\\Repositories\\adobe\\keyring-test", "/pyinst"
+		config.vm.network :public_network   
+		config.disksize.size = '80GB'
 
-    config.vm.define box_config[key]["name"] do |vbox| 
-      vbox.vm.box = key
-      vbox.vm.boot_timeout = 600
-      vbox.ssh.insert_key = false
-      vbox.vbguest.auto_update = false      
-      vbox.vm.provider "virtualbox" do |v|
-        v.customize ["modifyvm", :id, "--memory", 2048]
-        v.customize ["modifyvm", :id, "--cpus", 2]
-        v.customize ["modifyvm", :id, "--vram", 256]
-        v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
-        v.gui = false		
-		v.name = box_config[key]["name"]
-	  end
-   end	
+		config.vm.define vbox do |vbox| 
 
-  end
+			#vbox.vm.synced_folder ".", "/vagrant", disabled: true
+			#vbox.vm.synced_folder "D:\\PiBackup", "/pi"
+
+			vbox.vm.box = key
+			vbox.vm.boot_timeout = 600
+			vbox.ssh.insert_key = false
+			vbox.vbguest.auto_update = false      
+			vbox.vm.provider "virtualbox" do |v|
+				v.customize ["modifyvm", :id, "--memory", 4048]
+				v.customize ["modifyvm", :id, "--cpus", 2]
+				v.customize ["modifyvm", :id, "--vram", 256]
+				v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+				v.gui = false		
+				v.name = boxName
+			end
+		end
+	end
 end
