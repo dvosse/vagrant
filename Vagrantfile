@@ -38,17 +38,17 @@ boxes = [
   # "debian/contrib-jessie64",                         # Debian
   # "generic/debian9",                                 # Debian *
 
-  # "AndrewDryga/vagrant-box-osx",                     # MacOS (may need to disable folder sync (uncomment below)) *
+   #{}"AndrewDryga/vagrant-box-osx",                     # MacOS (may need to disable folder sync (uncomment below)) *
 
   # "opentable/win-2008r2-standard-amd64-nocm",        # Server 2008 Standard *
   # "opentable/win-2012r2-standard-amd64-nocm",        # Server 2012 Standard (no updates) *  
-   "danimaetrix/2012R2-demo-server",                   # Server 2012 Adobe Demo Server (fully updated) *
+  # "danimaetrix/2012R2-demo-server",                   # Server 2012 Adobe Demo Server (fully updated) *
   
   # "mwrock/Windows2016",                              # Server 2016 Standard 
   # "danimaetrix/win2016-datacenter-x64",              # Server 2016 Datacenter (Danimae) *
    
   # "inclusivedesign/windows81-eval-x64",              # Windows 8 *
-  # "danimaetrix/win10-prof-x64",                      # Windows 10 (Danimae) *
+   #{}"danimaetrix/win10-prof-x64",                      # Windows 10 (Danimae) *
   # "opentable/win-7-professional-amd64-nocm",         # Windows 7 *
   # "danimaetrix/vista-sp2-x64"                        # Vista x64 (Danimae) *
 
@@ -74,7 +74,7 @@ Vagrant.configure("2") do |config|
 
   boxes.each do |key|	
 
-	#vbox.vm.synced_folder ".", "/vagrant", disabled: true
+	config.vm.synced_folder ".", "/vagrant", disabled: true
 	#config.vm.synced_folder "D:\\Repositories\\adobe\\UST-Install-Scripts\\other_platforms", "/test"
 	#config.vm.synced_folder "D:\\Repositories\\adobe\\user-sync-fork", "/pyinst"
 	#config.vm.synced_folder "D:\\Repositories\\adobe\\keyring-test", "/pyinst"

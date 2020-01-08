@@ -1,1 +1,10 @@
-.vagrant/
+# Ignore everything
+*
+# But descend into directories
+!*/
+# Recursively allow files under subtree
+!/run_shortcuts/**
+# You can be specific with these rules
+!/some/other/deep/path/**
+!.gitignore
+!Vagrantfile
