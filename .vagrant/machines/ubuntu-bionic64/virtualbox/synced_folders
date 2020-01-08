@@ -1,1 +1,0 @@
-{"virtualbox":{"/pi":{"guestpath":"/pi","hostpath":"D:/PiBackup","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"G:/Repositories/carag/vagrant","disabled":false,"__vagrantfile":true}}}
