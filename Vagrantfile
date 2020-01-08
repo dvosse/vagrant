@@ -28,6 +28,7 @@ boxes = [
   # "thinktainer/centos-6_6-x64",                      # Centos 6 *
   # "ddacunha/CentOS-7.2",                             # Centos 7
   # "generic/fedora27",                                # Fedora *
+  # "generic/gentoo",                                  # Fedora *
 
   # "wvera/sles12sp1",                                 # SLES 12 / SP 1
   # "trueability/sles-12-sp1",                         # SLES 12 / SP 1
@@ -45,14 +46,11 @@ boxes = [
   # "opentable/win-2008r2-standard-amd64-nocm",        # Server 2008 Standard *
   # "opentable/win-2012r2-standard-amd64-nocm",        # Server 2012 Standard (no updates) *
   
-  # "danimaetrix/prft-2012r2-standard-ads",            # Server 2012 with Active Directory
-  # "danimaetrix/2012R2-demo-server",                  # Server 2012 Adobe Demo Server (fully updated) *
-  
   # "mwrock/Windows2016",                              # Server 2016 Standard 
   # "danimaetrix/win2016-datacenter-x64",              # Server 2016 Datacenter (Danimae) *
 
   # "inclusivedesign/windows81-eval-x64",              # Windows 8 *
-  # "danimaetrix/win10-prof-x64",                      # Windows 10 (Danimae) *
+   #{}"danimaetrix/win10-prof-x64",                      # Windows 10 (Danimae) *
   # "opentable/win-7-professional-amd64-nocm",         # Windows 7 *
   # "danimaetrix/vista-sp2-x64"                        # Vista x64 (Danimae) *
 
@@ -95,6 +93,3 @@ Vagrant.configure("2") do |config|
 		end
 	end
 end
-
-
-
