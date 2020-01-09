@@ -6,6 +6,7 @@
 ## Recommended choices denoted by *
 
 ## Prerequsite (Optional) vagrant plugin install vagrant-disksize
+## Prerequsite (Optional) vagrant plugin install vagrant-vbguest
 
 boxes = [
 
@@ -50,8 +51,8 @@ boxes = [
   ##### WINDOWS VM #####
 
   # "danimaetrix/windows-95",						   # Windows 95
-   "danimaetrix/windows-vista-sp2",				   # Windows Vista
-   "danimaetrix/windows-7-ultimate",				   # Windows 7 Ultimate
+  # "danimaetrix/windows-vista-sp2",				   # Windows Vista
+  # "danimaetrix/windows-7-ultimate",				   # Windows 7 Ultimate
   # "danimaetrix/windows-8.1",						   # Windows 8.1
   # "danimaetrix/windows-server-2012R2",			   # Windows Server 2012 R2
   # "danimaetrix/windows-server-2012R2-core",		   # Windows Server 2012 R2 (Core)
